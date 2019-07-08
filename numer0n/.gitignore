@@ -2,9 +2,10 @@ target
 *.iml
 .idea
 .settings
-bin/
+/bin
 .project
 .classpath
+*/.class
 # Compiled class file
 *.class
 
