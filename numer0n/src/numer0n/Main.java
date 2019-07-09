@@ -1,6 +1,6 @@
 package numer0n;
 
-import java.util.Random;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
@@ -12,11 +12,19 @@ public class Main {
         Player player = new Player();
         Comp comp = new Comp();
 
-        Scanner scanner = new Scanner(System.in);
+        int numberOfBite = 0;
+        int numberOfEat = 0;
 
         System.out.println("数字を決めてね");
 
-        //プレーヤーの数字を決める処理（重複なし）
+        player.setUp();
+        comp.setUp();
+
+        //順番関係なしに確かめる
+        ArrayList<Integer> callNumbers = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("相手の数字を当ててね");
         for (int i = 0; i < 3; i++) {
             System.out.println(i + 1 + "けた目の数字を入力してね");
             int inputNumber = scanner.nextInt();
@@ -25,37 +33,39 @@ public class Main {
                 i--;
                 continue;
             }
-            player.getNumbers().add(inputNumber);
+            callNumbers.add(inputNumber);
             for (int j = 0; j < i; j++) {
-                if (player.getNumbers().get(i).equals(player.getNumbers().get(j))) {
+                if (callNumbers.get(i).equals(callNumbers.get(j))) {
                     System.out.println("重複してるから数字を入力しなおしてね");
-                    player.getNumbers().remove(i);
+                    callNumbers.remove(i);
                     i--;
                     break;
                 }
             }
         }
 
-        //コンピュータの数字を決める処理（重複なし）
-        Random random = new Random();
         for (int i = 0; i < 3; i++) {
-            int randomNumber = random.nextInt(10);
-            comp.getNumbers().add(randomNumber);
-            for (int j = 0; j < i; j++) {
-                if (comp.getNumbers().get(i).equals(comp.getNumbers().get(j))) {
-                    comp.getNumbers().remove(i);
-                    i--;
-                    break;
-                }
+            if (comp.getNumbers().contains(callNumbers.get(i))) {
+                numberOfBite++;
+            }
+            if (comp.getNumbers().get(i).equals(callNumbers.get(i))) {
+                numberOfBite--;
+                numberOfEat++;
             }
         }
 
+
+        //確認用プレーヤーの数字表示
         for (int i = player.getNumbers().size() - 1; 0 <= i; i--) {
             System.out.print(player.getNumbers().get(i));
         }
         System.out.println();
+        //確認用相手の数字表示
         for (int i = comp.getNumbers().size() - 1; 0 <= i; i--) {
             System.out.print(comp.getNumbers().get(i));
         }
+        System.out.println();
+
+        System.out.println(numberOfEat + "EAT " + numberOfBite + "BITE");
     }
 }
