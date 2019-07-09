@@ -29,7 +29,7 @@ public class Main {
         //相手の数字を決める
         comp.setUp();
 
-        //順番関係なしに確かめる（とりあえず作った）
+        //数字当たってるかどうか確かめる（とりあえず作った）
         /**
          * callする3桁の数字を表す
          */
@@ -60,23 +60,25 @@ public class Main {
 
         for (int i = 0; i < 3; i++) {
             if (comp.getNumbers().contains(callNumbers.get(i))) {
-                numberOfBite++;
-            }
-            if (comp.getNumbers().get(i).equals(callNumbers.get(i))) {
-                numberOfBite--;
-                numberOfEat++;
+                if (comp.getNumbers().get(i).equals(callNumbers.get(i))) {
+                    numberOfEat++;
+                } else {
+                    numberOfBite++;
+                }
             }
         }
 
 
         //確認用プレーヤーの数字表示
+        System.out.println("自分の数字");
         for (int i = player.getNumbers().size() - 1; 0 <= i; i--) {
-            System.out.print("自分の数字" + player.getNumbers().get(i));
+            System.out.print(player.getNumbers().get(i));
         }
         System.out.println();
         //確認用相手の数字表示
+        System.out.println("相手の数字");
         for (int i = comp.getNumbers().size() - 1; 0 <= i; i--) {
-            System.out.print("相手の数字" + comp.getNumbers().get(i));
+            System.out.print(comp.getNumbers().get(i));
         }
         System.out.println();
 
